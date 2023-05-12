@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('preferences', function (Blueprint $table) {
             $table->id();
-            $table->string("preference");
+            $table->string("preference")->unique();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });

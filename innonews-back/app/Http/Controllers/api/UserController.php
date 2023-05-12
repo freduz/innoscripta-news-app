@@ -10,7 +10,10 @@ class UserController extends Controller
 {
     //
     public function index(){
-        $users = User::all();
-        return $users;
+        $user = User::find(auth()->id());
+        $preferences = $user->preferences;
+        return [ 
+            $preferences
+        ];
     }
 }
