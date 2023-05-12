@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -29,5 +30,29 @@ class AuthController extends Controller
             'token' => $token
         ];
         return response($response,201);
+    }
+
+    public function logout(Request $request){
+        auth()->user()->tokens()->delete();
+        return [
+            'message' => 'user logged out'
+        ];
+
+    }
+
+    public function login(Request $request){
+        $fields = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
+
+        $user = User::where('email',$fields['email'])->first();
+        if(!$user || !Hash::check($fields['password'],$user->password)){
+            return response([
+                'message' => 'Bad credentials'
+            ],401);
+        }
+        $token = $user->createToken('newsappptoken')->plainTextToken;
+        return response(['user' => $user,'token' => $token],201);
     }
 }
