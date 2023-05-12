@@ -44,6 +44,6 @@ class User extends Authenticatable
     ];
 
     public function preferences():HasMany{
-        return $this->hasMany(Preference::class);
+        return $this->hasMany('App\Models\Preference');
     }
 }
