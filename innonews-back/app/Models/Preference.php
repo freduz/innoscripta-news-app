@@ -10,7 +10,9 @@ class Preference extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'preference',
+        'sources',
+        'categories',
+        'authors',
         'user_id'
     ];
 

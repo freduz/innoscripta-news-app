@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\NewsController;
 use App\Http\Controllers\api\PreferenceController;
+use App\Http\Controllers\api\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +33,10 @@ Route::post('login',[AuthController::class,'login']);
 
 
 Route::get('news/everything',[NewsController::class,'getEverything']);
+Route::get('news/headlines',[NewsController::class,'getHeadlines']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('logout',[AuthController::class,'logout']);
-        Route::get('users',[UserController::class,'index']);
         Route::resource('preference',PreferenceController::class);
     });
 

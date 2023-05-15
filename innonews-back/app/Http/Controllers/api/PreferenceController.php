@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Preference;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,26 +12,38 @@ class PreferenceController extends Controller
 {
   
    
-    public function store(Request $request)
+    public function update(Request $request)
     {
         $fields = $request->validate([
-            'preferences' => 'required|string|unique:preferences,preference'
+            'sources' => 'array',
+            'categories' => 'array',
+            'authors' => 'array',
         ]);
 
-        $dataBuilder = [];
-        $preferences = explode(',',$fields['preferences']);
-        foreach($preferences as $preference){
-            array_push($dataBuilder,[
-                'user_id' => auth()->id(),
-                "preference" => $preference
-            
-            ]);
-        }
-
-        DB::table('preferences')->insert($dataBuilder);
-
-        return response($dataBuilder,201);
+    $dataObj = [];
+    foreach($fields as $key => $value){
+       $dataObj[$key] = implode(',',$fields[$key]);
     }
+    $dataObj['user_id'] = auth()->id(); 
+    $pref = Preference::where('user_id',auth()->id())->update($dataObj);
+
+        return response($pref,201);
+    }
+
+    public function index(){
+        $user = User::find(auth()->id());  
+        $preferences = [
+            'sources' => explode(',',$user->preferences['sources']),
+            'categories' => explode(',',$user->preferences['categories']),
+            'authors' => explode(',',$user->preferences['authors']),
+
+        ];
+        return $preferences;
+    }
+
+    // public function update(Request $request, $preference){
+        
+    // }
 
     
 }

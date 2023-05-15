@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Location;
 
 class NewsController extends Controller
 {
@@ -18,6 +19,14 @@ class NewsController extends Controller
             $data
         ];
     }
+
+    // public function getHeadlines(Request $request){
+    //     $currentIp = $request->ip();
+    //     $userCountryInfo = Location::get($currentIp);
+    //     return [
+    //         $currentIp,
+    //         $userCountryInfo];
+    // }
 
    
 }
