@@ -30,10 +30,13 @@ Route::post('login',[AuthController::class,'login']);
 // });
 
 //public route for news
+Route::controller(NewsController::class)->group(function(){
+    Route::get('news/everything','getEverything');
+    Route::get('news/headlines','getHeadlines');
+    Route::get('news/search','searchNews');
+});
 
 
-Route::get('news/everything',[NewsController::class,'getEverything']);
-Route::get('news/headlines',[NewsController::class,'getHeadlines']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('logout',[AuthController::class,'logout']);
