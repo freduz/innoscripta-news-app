@@ -8,7 +8,7 @@ const Headlines:React.FC<headlineProps> = (props) => {
     <>
        <div className="third-section p-7">
         <div className="font-playfair pb-3  flex flex-col gap-4">
-            <div className="news-title border-b-2 border-black pb-5">
+            <div className="news-title border-dotted border-b-2 border-black pb-5">
                 <h2 className="text-[18px] font-[700]">Random picks</h2>
             </div>
             <div className="random-pick-news flex flex-col gap-5">
