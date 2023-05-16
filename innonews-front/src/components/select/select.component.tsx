@@ -1,22 +1,32 @@
 import React, { SelectHTMLAttributes, useState } from "react";
-import { MultiSelect, Option } from "react-multi-select-component";
+import Multiselect from 'multiselect-react-dropdown';
 
-interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement>{
-options:Option[],
-label:string
+type SelectBoxProps = {
+options:any
+label:string,
+onSearch:(event:any) => void,
+onSelect:(event:any) => void,
+selectedValues:any
 }
-  const SelectBox:React.FC<SelectBoxProps> = ({options,label}) => {
-    const [selected, setSelected] = useState([]);
+  const SelectBox:React.FC<SelectBoxProps> = ({options,label,onSearch,onSelect,selectedValues}) => {
+    const onSelectSearch = (selectedList: any) => {
+        onSelect(selectedList)
+    }
+    
   
     return (
       <div>
         <h1>{label}</h1>
-        <MultiSelect
-          options={options}
-          value={selected}
-          onChange={setSelected}
-          labelledBy="Select"
-        />
+        <Multiselect
+  displayValue="key"
+  onKeyPressFn={function noRefCheck(){}}
+  onRemove={function noRefCheck(){}}
+  onSearch={val => onSearch(val)}
+  onSelect={onSelectSearch}
+  options={options}
+  selectedValues={selectedValues}
+  selectionLimit={5}
+/>
       </div>
     );
   };

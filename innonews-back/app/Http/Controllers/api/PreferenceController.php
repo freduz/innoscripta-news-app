@@ -25,25 +25,42 @@ class PreferenceController extends Controller
        $dataObj[$key] = implode(',',$fields[$key]);
     }
     $dataObj['user_id'] = auth()->id(); 
-    $pref = Preference::where('user_id',auth()->id())->update($dataObj);
+    $pref= Preference::updateOrCreate(
+        ['user_id' => $dataObj['user_id']],
+        $dataObj
+    );
+    
 
         return response($pref,201);
     }
 
     public function index(){
-        $user = User::find(auth()->id());  
+        $user = User::find(auth()->id());
+        $preferences = [];  
+        if(!empty($user->preferences)){
         $preferences = [
-            'sources' => explode(',',$user->preferences['sources']),
-            'categories' => explode(',',$user->preferences['categories']),
-            'authors' => explode(',',$user->preferences['authors']),
+            'sources' => $this->formateJsonResponse(explode(',',$user->preferences['sources'])),
+            'categories' => $this->formateJsonResponse(explode(',',$user->preferences['categories'])),
+            'authors' => $this->formateJsonResponse(explode(',',$user->preferences['authors'])),
 
         ];
+    }
         return $preferences;
     }
 
-    // public function update(Request $request, $preference){
-        
-    // }
+    private function formateJsonResponse($data){
+        $transformedData = [];
+        if(!empty($data)){
+        foreach($data as $item){
+            array_push($transformedData,[
+                'cat' => $item,
+                'key' => $item
+            ]);
+         
+        }
+    }
+        return $transformedData;
+}
 
     
 }
