@@ -41,15 +41,17 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
+        
         $fields = $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
         ]);
+        
 
         $user = User::where('email',$fields['email'])->first();
         if(!$user || !Hash::check($fields['password'],$user->password)){
             return response([
-                'message' => 'Bad credentials'
+                'message' => 'Invalid username or password'
             ],401);
         }
         $token = $user->createToken('newsappptoken')->plainTextToken;
