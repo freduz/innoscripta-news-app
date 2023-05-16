@@ -1,9 +1,32 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import {useSelector,useDispatch} from 'react-redux'
+import { RootState } from '../../store/store'
+import { useLogoutMutation } from '../../store/slices/userAuthSlice'
+import { logout } from '../../store/slices/authSlice'
+import Button from '../button/button.component'
 
 type NavBarProps = {}
 
 const Navbar:React.FC<NavBarProps> = () => {
+
+    const {userInfo} = useSelector((state:RootState) => state.auth)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [logoutCall] = useLogoutMutation();
+
+
+    const logOutHandler = async() => {
+        try{
+             await logoutCall('dfg').unwrap();
+             dispatch(logout())
+             navigate('/login')
+        }catch(err:any){
+
+        }
+    }
+
+
   return (
   <>
     <div className="bg-[#f0f0f0]">
@@ -15,7 +38,7 @@ const Navbar:React.FC<NavBarProps> = () => {
                     <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
                         <div className="grid place-items-center h-full w-12 text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </div>
                 
@@ -27,9 +50,23 @@ const Navbar:React.FC<NavBarProps> = () => {
                     </div>
                 </div>
             </div>
-           <div className="hidden md:grow md:basis-0 md:flex items-center justify-end">
-            <Link to="/login"  type="button" className="text-white bg-black hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Login</Link>
+            {userInfo ? (
+                <>
+                <div className="hidden md:grow md:basis-0 md:flex items-center justify-end">
+            <button onClick={logOutHandler}  type="button" className="text-white bg-black hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Logout</button>
         </div>
+                </>
+            ) : (
+                <>
+                <div className="hidden md:grow md:basis-0 md:flex items-center justify-end">
+            <Link to="/login" className="text-white bg-black hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Login</Link>
+        </div>
+                </>
+            )
+            
+            
+            }
+           
         </div>
      </nav>
   </div>
