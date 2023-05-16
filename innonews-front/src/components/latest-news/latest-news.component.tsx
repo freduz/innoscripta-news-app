@@ -6,8 +6,8 @@ type latestNewsProps = {}
 const LatestNews:React.FC<latestNewsProps> = (props) => {
   return (
    <>
-    <div className="first-section p-7 border-r-2 border-black font-playfair flex flex-col gap-6">
-    <div className="news-title border-b-2 border-black pb-5">
+    <div className="first-section p-7 border-dotted border-r-2 border-black font-playfair flex flex-col gap-6">
+    <div className="news-title border-dotted border-b-2 border-black pb-5">
                 <h2 className="text-[18px] font-[700]">Latest news</h2>
             </div>
             <div className="news-content flex flex-col gap-3">
