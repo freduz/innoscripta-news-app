@@ -34,6 +34,9 @@ Route::controller(NewsController::class)->group(function(){
     Route::get('news/everything','getEverything');
     Route::get('news/headlines','getHeadlines');
     Route::get('news/search','searchNews');
+    Route::get('news/sources','getSources');
+    Route::get('news/categories','getCategories');
+    Route::get('news/authors','getAuthors');
 });
 
 

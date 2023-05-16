@@ -54,6 +54,7 @@ const Navbar:React.FC<NavBarProps> = () => {
                 <>
                 <div className="hidden md:grow md:basis-0 md:flex items-center justify-end">
             <button onClick={logOutHandler}  type="button" className="text-white bg-black hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Logout</button>
+            <Link to='/settings'  type="button" className="text-white bg-black hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Settings</Link>
         </div>
                 </>
             ) : (
