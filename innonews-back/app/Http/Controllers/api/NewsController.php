@@ -36,8 +36,9 @@ class NewsController extends Controller
    
     public function searchNews(Request $request){
         $searchTerm = $request->query('q');
-        $news = Http::get("https://newsapi.org/v2/everything?q=$searchTerm&apiKey=$this->API_KEY_NEWS_ORG");
-        return response($news->json(),201);
+        $pageSize =  $request->query('pageSize');
+        $news = Http::get("https://newsapi.org/v2/everything?q=$searchTerm&apiKey=$this->API_KEY_NEWS_ORG&pageSize=$pageSize")->json();
+        return response($news['articles'],201);
     }
 
 
@@ -76,5 +77,7 @@ class NewsController extends Controller
             return $transformedData;
     }
 
+
+   
    
 }
