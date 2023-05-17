@@ -7,6 +7,11 @@ const initialState = {
    technology:[],
    entertainment:[],
    topHeadlines:[],
+   customFeed:{
+    latestNews:[],
+    randomPicks:[],
+    trending:[]
+   }
 
 }
 
@@ -18,19 +23,23 @@ const newsSlice = createSlice({
             state.sports = action.payload;
         },
         setEducation:(state,action) => {
-            state.sports = action.payload;
+            state.education = action.payload;
         },
         setPolitics:(state,action) => {
-            state.sports = action.payload;
+            state.politics = action.payload;
         },
         setTechnology:(state,action) => {
-            state.sports = action.payload;
+            state.technology = action.payload;
         },
         setEntertainment:(state,action) => {
-            state.sports = action.payload;
-        }
+            state.entertainment = action.payload;
+        },
+        setCustomFeed:(state,action) => {
+            state.customFeed = action.payload;
+        },
+
     }
 })
 
-export const {setSports,setEducation,setPolitics,setEntertainment,setTechnology} = newsSlice.actions
+export const {setSports,setEducation,setPolitics,setEntertainment,setTechnology,setCustomFeed} = newsSlice.actions
 export default newsSlice.reducer
