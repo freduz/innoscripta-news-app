@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Location;
@@ -36,8 +37,47 @@ class NewsController extends Controller
    
     public function searchNews(Request $request){
         $searchTerm = $request->query('q');
-        $news = Http::get("https://newsapi.org/v2/everything?q=$searchTerm&apiKey=$this->API_KEY_NEWS_ORG");
-        return response($news->json(),201);
+        $pageSize =  $request->query('pageSize');
+        $news = Http::get("https://newsapi.org/v2/everything?q=$searchTerm&apiKey=$this->API_KEY_NEWS_ORG&pageSize=$pageSize")->json();
+        return response($news['articles'],201);
+    }
+
+    private function makeHomeFeed($keyword,$preference=[]){
+        $news = [];
+        if(!empty($preference)){
+            $news = Http::get('http://eventregistry.org/api/v1/article/getArticles',[
+                'apiKey' => $this->API_KEY_NEWS_IO,
+                'keyword' => $keyword,
+                'categoryUri' => explode(',',$preference['categories'] ?? null),
+                'sourceUri' => explode(',',$preference['sources'] ?? null),
+                'authorUri' => explode(',',$preference['authors'] ?? null),
+                'articlesCount' => 100
+            ])->json();
+        }else{
+            $news = Http::get('http://eventregistry.org/api/v1/article/getArticles',[
+                'apiKey' => $this->API_KEY_NEWS_IO,
+                'keyword' => $keyword,
+                'articlesCount' => 100
+            ])->json();
+        }
+        
+
+        return $news['articles']['results'];
+    }
+
+    public function getCustomNewsFeed(Request $request){
+        $user = User::find(auth()->id());
+        $preference = $user->preferences;
+        $latestNews = $this->makeHomeFeed('latest',$preference);
+        $randomPicks = $this->makeHomeFeed('random',$preference);
+        $trending = $this->makeHomeFeed('trending',$preference);
+        $finalFeed = [
+            'latestNews' => $latestNews,
+            'randomPicks' => $randomPicks,
+            'trending' => $trending
+        ];
+
+        return response($finalFeed);
     }
 
 
@@ -76,5 +116,20 @@ class NewsController extends Controller
             return $transformedData;
     }
 
+    public function getCommonFeeds(Request $request){
+        $latestNews = $this->makeHomeFeed('latest');
+        $randomPicks = $this->makeHomeFeed('random');
+        $trending = $this->makeHomeFeed('trending');
+        $finalFeed = [
+            'latestNews' => $latestNews,
+            'randomPicks' => $randomPicks,
+            'trending' => $trending
+        ];
+
+        return response($finalFeed);
+    }
+
+
+   
    
 }

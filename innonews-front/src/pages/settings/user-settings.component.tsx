@@ -29,9 +29,7 @@ const UserSettings:React.FC<UserSettingsProps> = (props) => {
       },[])
    
 
-        const [selectedCategories,setSelectedCategories] = useState([]);
-        const [selectedAuthors,setSelectedAuthors] = useState([]);
-        const [selectedSources,setSelectedSources] = useState([]);
+        
 
         const [categoryCaller] = useCategoriesMutation();
         const [authorsCaller] = useAuthorsMutation();
@@ -42,7 +40,9 @@ const UserSettings:React.FC<UserSettingsProps> = (props) => {
         const {categories,authors,sources} = useSelector((state:RootState) => state.preferences)
         const {user:{id}} = JSON.parse(localStorage.getItem('userInfo') as string); 
         const {categories:savedcategories,authors:savedauthors,sources:savedsources} = useSelector((state:RootState) => state.settings.preferences)
-
+        const [selectedCategories,setSelectedCategories] = useState(savedcategories);
+        const [selectedAuthors,setSelectedAuthors] = useState(savedauthors);
+        const [selectedSources,setSelectedSources] = useState(savedsources);
         const onCategorySearch = async (val:string) =>{
                const categories = await categoryCaller(val).unwrap();
                dispatch(setCategories(categories))
@@ -81,11 +81,9 @@ const UserSettings:React.FC<UserSettingsProps> = (props) => {
                     id
                 }
                const res= await settingsAddCaller(payload)
-               console.log(res);
                
                toast.success('Your preferences saved successfully')
             } catch (error) {
-                console.log(error)
             }
            
         }

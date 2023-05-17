@@ -12,6 +12,10 @@ selectedValues:any
     const onSelectSearch = (selectedList: any) => {
         onSelect(selectedList)
     }
+
+    const onRemove = (selectedList: any) =>{
+      onSelect(selectedList)  
+    }
     
   
     return (
@@ -20,7 +24,7 @@ selectedValues:any
         <Multiselect
   displayValue="key"
   onKeyPressFn={function noRefCheck(){}}
-  onRemove={function noRefCheck(){}}
+  onRemove={onRemove}
   onSearch={val => onSearch(val)}
   onSelect={onSelectSearch}
   options={options}

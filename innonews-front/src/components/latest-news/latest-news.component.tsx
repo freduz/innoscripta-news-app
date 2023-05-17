@@ -1,51 +1,53 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import truncate from '../../utils/truncate-text'
 
-type latestNewsProps = {}
+import { ThreeDots } from  'react-loader-spinner'
 
-const LatestNews:React.FC<latestNewsProps> = (props) => {
+type latestNewsProps = {
+  latestNews:any[],
+  loading:any
+}
+
+const LatestNews:React.FC<latestNewsProps> = ({latestNews,loading}) => {
   return (
    <>
     <div className="first-section p-7 border-dotted border-r-2 border-black font-playfair flex flex-col gap-6">
     <div className="news-title border-dotted border-b-2 border-black pb-5">
                 <h2 className="text-[18px] font-[700]">Latest news</h2>
+                <div className="mx-auto flex justify-center">
+          <ThreeDots 
+          height="80" 
+          width="80" 
+          radius="9"
+          color="#000" 
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          visible={loading}
+          />
+                    </div>
             </div>
-            <div className="news-content flex flex-col gap-3">
-                <img src="https://i0.wp.com/coolhunting.com/wp-content/uploads/2023/05/Podcast_CHDT_episode_4x3_CH-only_MD.png?fit=1200%2C900&ssl=1" alt="" className="w-full h-25 object-cover object-bottom"/>
-                 <div className="flex flex-col gap-3">
-                    <span className="text-[15px] font-[700] font-sans">11 December 2021</span>
-                    <h2 className="text-[32px] font-[500] font-playfair">Photo model</h2>
-                    <p className="text-[16px] font-[400] font-playfair leading-[22.4px]">Some interesting inspirations and camera settings during photo sessions in the studio. Thanks to this, your photos will be even better. We have create...</p>
-                      <div className="move-area flex items-center gap-2">
-                        <Link to="">Read more</Link>
-                        <i className="fa fa-light fa-arrow-right"></i>
-                      </div>
-                 </div>
-            </div>
-            <div className="news-content flex flex-col gap-3">
-                <img src="https://i0.wp.com/coolhunting.com/wp-content/uploads/2023/05/Podcast_CHDT_episode_4x3_CH-only_MD.png?fit=1200%2C900&ssl=1" alt="" className="w-full h-25 object-cover object-bottom"/>
-                 <div className="flex flex-col gap-3">
-                    <span className="text-[15px] font-[700] font-sans">11 December 2021</span>
-                    <h2 className="text-[32px] font-[500] font-playfair">Photo model</h2>
-                    <p className="text-[16px] font-[400] font-playfair leading-[22.4px]">Some interesting inspirations and camera settings during photo sessions in the studio. Thanks to this, your photos will be even better. We have create...</p>
-                      <div className="move-area flex items-center gap-2">
-                        <Link to="">Read more</Link>
-                        <i className="fa fa-light fa-arrow-right"></i>
-                      </div>
-                 </div>
-            </div>
-            <div className="news-content flex flex-col gap-3">
-                <img src="https://i0.wp.com/coolhunting.com/wp-content/uploads/2023/05/Podcast_CHDT_episode_4x3_CH-only_MD.png?fit=1200%2C900&ssl=1" alt="" className="w-full h-25 object-cover object-bottom"/>
-                 <div className="flex flex-col gap-3">
-                    <span className="text-[15px] font-[700] font-sans">11 December 2021</span>
-                    <h2 className="text-[32px] font-[500] font-playfair">Photo model</h2>
-                    <p className="text-[16px] font-[400] font-playfair leading-[22.4px]">Some interesting inspirations and camera settings during photo sessions in the studio. Thanks to this, your photos will be even better. We have create...</p>
-                      <div className="move-area flex items-center gap-2">
-                        <Link to="">Read more</Link>
-                        <i className="fa fa-light fa-arrow-right"></i>
-                      </div>
-                 </div>
-            </div>
+            {
+              !loading && (
+                latestNews.slice(0,9).map(news => (
+                  <>
+                  <div className="news-content flex flex-col gap-3">
+                  <img src={news.image} alt="" className="w-full h-25 object-cover object-bottom"/>
+                   <div className="flex flex-col gap-3">
+                      <span className="text-[15px] font-[700] font-sans">{news.date}</span>
+                      <h2 className="text-[20px] font-[400] font-playfair">{news.title}</h2>
+                      <p className="text-[16px] font-[400] font-playfair leading-[22.4px]">{truncate(news.body)}</p>
+                        <div className="move-area flex items-center gap-2">
+                          <Link to={news.url} target='_blank'>Read more</Link>
+                          <i className="fa fa-light fa-arrow-right"></i>
+                        </div>
+                   </div>
+              </div>
+                  </>
+                ))
+              )
+            }
+
       </div>
   
            

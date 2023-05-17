@@ -37,6 +37,8 @@ Route::controller(NewsController::class)->group(function(){
     Route::get('news/sources','getSources');
     Route::get('news/categories','getCategories');
     Route::get('news/authors','getAuthors');
+    Route::get('news/feed/common','getCommonFeeds');
+   
 });
 
 
@@ -44,5 +46,6 @@ Route::controller(NewsController::class)->group(function(){
 Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('logout',[AuthController::class,'logout']);
         Route::resource('preference',PreferenceController::class);
+        Route::get('news/feed',[NewsController::class,'getCustomNewsFeed']);
     });
 

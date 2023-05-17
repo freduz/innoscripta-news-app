@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit'
 import authReducer from './slices/authSlice'
+import { apiSlice } from './slices/apiSlice'
+
 import preferenceSliceReducer from './slices/preferenceSlice'
 import settingsSliceReducer  from './slices/settingsSlice'
-import { apiSlice } from './slices/apiSlice'
+import newsSliceReducer from './slices/newsSlice'
 
 
 export const store = configureStore({
@@ -10,6 +12,7 @@ export const store = configureStore({
         auth:authReducer,
         preferences:preferenceSliceReducer,
         settings:settingsSliceReducer,
+        news:newsSliceReducer,
         [apiSlice.reducerPath] : apiSlice.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
