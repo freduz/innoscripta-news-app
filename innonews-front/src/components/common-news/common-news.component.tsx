@@ -37,8 +37,8 @@ const CommonNews:React.FC<Props> = ({news,label,loading}) => {
                                     <div className="news-card flex gap-2 p-4 h-fit">
                                             <img src={data.urlToImage} alt="" className="w-[50%] object-cover object-bottom"/>
                                             <div className="topic-content">
-                                                <span className="font-playfair text-sm font-bold">2023-05-03</span>
-                                                <h3 className="font-playfair font-[200] text-[13px]">A Dark Day for LGBTI Rights as Uganda’s Parliament Passes Anti-LGBTI Law</h3>
+                                                <span className="font-playfair text-sm font-bold">{data?.date}</span>
+                                                <h3 className="font-playfair font-[200] text-[13px]">{data?.title}</h3>
                                             </div>
                                         </div>
                                     </Link>
