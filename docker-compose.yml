@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+
+  backend:
+    build:
+      context: ./innonews-back
+      dockerfile: Dockerfile 
+    
+    environment:
+      DB_HOST: db
+      DB_DATABASE: innoscripta_DB
+      DB_USERNAME: root
+      DB_PASSWORD: 123
+    
+    ports:
+      - 8000:8000
+    
+    volumes:
+      - ./innonews-back:/app/backend
+    
+    depends_on:
+      - db
+      
+
+
+    networks:
+      - app
+
+  frontend:
+    build:
+      context: ./innonews-front
+      dockerfile: Dockerfile
+    
+    tty: true
+    
+    ports:
+      - 3000:3000
+    volumes:
+      - ./innonews-front:/app/frontend
+    
+    depends_on:
+      - backend
+
+    networks:
+      - app
+
+  db:
+    image: mysql:8.0.26
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    environment:
+        MYSQL_DATABASE: innoscripta_DB
+        MYSQL_ROOT_PASSWORD: 123
+    networks:
+      - app
+
+
+
+
+networks:
+  app:
+    driver: bridge

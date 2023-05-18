@@ -4,7 +4,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import { RootState } from '../../store/store'
 import { useLogoutMutation } from '../../store/slices/userAuthSlice'
 import { logout } from '../../store/slices/authSlice'
-import Button from '../button/button.component'
+import HamMenu from '../hammenu/hammenu.component'
 
 type NavBarProps = {}
 
@@ -18,7 +18,7 @@ const Navbar:React.FC<NavBarProps> = () => {
 
     const logOutHandler = async() => {
         try{
-             await logoutCall('dfg').unwrap();
+             await logoutCall('').unwrap();
              dispatch(logout())
              navigate('/login')
         }catch(err:any){
@@ -31,8 +31,10 @@ const Navbar:React.FC<NavBarProps> = () => {
   <>
     <div className="bg-[#f0f0f0]">
     <nav className="relative container mx-auto py-3">
-        <div className="flex items-center justify-between ">
-            <h2 className="font-playfair text-[32px] font-[700] grow basis-0">Newspaper.</h2>
+        <div className="flex items-center justify-between">
+            <Link to="/">
+            <h2 className="p-7 md:p-0 font-playfair text-[32px] font-[700] grow basis-0">Newspaper.</h2>
+            </Link>
             <div className="hidden md:block md:grow  md:basis-0">
                 <div className='max-w-md mx-auto'>
                     <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
@@ -50,6 +52,7 @@ const Navbar:React.FC<NavBarProps> = () => {
                     </div>
                 </div>
             </div>
+            <HamMenu/>
             {userInfo ? (
                 <>
                 <div className="hidden md:grow md:basis-0 md:flex items-center justify-end">
