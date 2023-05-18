@@ -9,9 +9,6 @@ const SingleNews = (props: Props) => {
 
     const {slug} = useParams();
     const [newsData,setNewsData] = useState([])
-
-    console.log(newsData)
-
     const [findSingleNews] = useSingleMutation();
 
     useEffect(() => {

@@ -38,7 +38,7 @@ const UserSettings:React.FC<UserSettingsProps> = (props) => {
         const [settingsCaller] = useFindAllMutation();
         const dispatch = useDispatch();
         const {categories,authors,sources} = useSelector((state:RootState) => state.preferences)
-        const {user:{id}} = JSON.parse(localStorage.getItem('userInfo') as string); 
+        const {user:{id}} =  JSON.parse(localStorage.getItem('userInfo') as string); 
         const {categories:savedcategories,authors:savedauthors,sources:savedsources} = useSelector((state:RootState) => state.settings.preferences)
         const [selectedCategories,setSelectedCategories] = useState(savedcategories);
         const [selectedAuthors,setSelectedAuthors] = useState(savedauthors);
