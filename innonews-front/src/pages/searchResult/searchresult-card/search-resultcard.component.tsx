@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ThreeDots } from  'react-loader-spinner'
+import truncate from '../../../utils/truncate-text'
 
 type Props = {
     news:any[],
@@ -8,7 +9,7 @@ type Props = {
     loading:any
 }
 
-const CommonNews:React.FC<Props> = ({news,label,loading}) => {
+const SearchResultCard:React.FC<Props> = ({news,label,loading}) => {
   return (
     <>
     <div className="mx-auto flex justify-center" >
@@ -35,10 +36,10 @@ const CommonNews:React.FC<Props> = ({news,label,loading}) => {
                                     <>
                                     <Link to={data.url} target='_blank'>
                                     <div className="news-card flex gap-2 p-4 h-fit">
-                                            <img src={data.urlToImage} alt="" className="w-[50%] object-cover object-bottom"/>
+                                            <img src={data.image} alt="" className="w-[50%] object-cover object-bottom"/>
                                             <div className="topic-content">
-                                                <span className="font-playfair text-sm font-bold">2023-05-03</span>
-                                                <h3 className="font-playfair font-[200] text-[13px]">A Dark Day for LGBTI Rights as Uganda’s Parliament Passes Anti-LGBTI Law</h3>
+                                                <span className="font-playfair text-sm font-bold">{data?.date}</span>
+                                                <h3 className="font-playfair font-[200] text-[13px]">{truncate(data.title)}</h3>
                                             </div>
                                         </div>
                                     </Link>
@@ -55,4 +56,4 @@ const CommonNews:React.FC<Props> = ({news,label,loading}) => {
   )
 }
 
-export default CommonNews
+export default SearchResultCard

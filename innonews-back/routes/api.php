@@ -38,7 +38,8 @@ Route::controller(NewsController::class)->group(function(){
     Route::get('news/categories','getCategories');
     Route::get('news/authors','getAuthors');
     Route::get('news/feed/common','getCommonFeeds');
-   
+    Route::get('news/guaridan/search','getGuardianSearch');
+    Route::get('news/unique/search','searchFilterNews');
 });
 
 

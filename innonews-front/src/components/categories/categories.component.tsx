@@ -1,4 +1,6 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 type categoriesProps = {}
 
@@ -7,12 +9,10 @@ const Categories:React.FC<categoriesProps> = (props) => {
    <>
     <div className="container mx-auto flex items-center justify-between">
         <ul className="hidden md:flex items-center justify-between py-4 w-full text-black font-playfair">
-           <li><a href="">NEWS</a></li>
-           <li><a href="">ENTERTAINMENT</a></li>
-           <li><a href="">TECHNOLOGY</a></li>
-           <li><a href="">TRAVEL</a></li>
-           <li><a href="">FOOD</a></li>
-           <li><a href="">SPORTS</a></li>
+           <li><NavLink to="news/entertainment">ENTERTAINMENT</NavLink></li>
+           <li><NavLink to="news/technology">TECHNOLOGY</NavLink></li>
+           <li><NavLink to="news/travel">TRAVEL</NavLink></li>
+           <li><NavLink to="news/business">Business</NavLink></li>
         </ul>
      </div>
      <hr></hr>
