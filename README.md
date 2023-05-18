@@ -19,6 +19,14 @@ The fullstack news application is a software solution that allows users to acces
 
 To run the docker compose
 
+clone the repository and change into the project directory 
+
+```bash 
+  cd innoscripta-news-app
+```
+
+
+
 ```bash
   docker-compose up -d
 ```
@@ -32,11 +40,16 @@ To migrate the database
   php artisan migrate:refresh
 ```
 
+Frontend app : localhost:3000
+
+Backend  app : localhost:8000
+
 ## Appendix
 
 External apis used for the project
-News api io :  https://newsapi.org/
-guardian api : https://open-platform.theguardian.com/documentation/
-News api ai:   https://newsapi.ai/documentation?tab=introduction
 
+https://newsapi.org/
 
+https://open-platform.theguardian.com/documentation/
+
+https://newsapi.ai/documentation?tab=introduction
