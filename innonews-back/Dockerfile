@@ -1,0 +1,15 @@
+FROM php:8.1.19-fpm-alpine3.18
+
+RUN docker-php-ext-install pdo pdo_mysql sockets
+RUN curl -sS https://getcomposer.org/installer​ | php -- \
+     --install-dir=/usr/local/bin --filename=composer
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /app/backend
+COPY . .
+RUN composer install
+
+RUN php artisan migrate:fresh
+EXPOSE 8000
+CMD php artisan serve --host=0.0.0.0

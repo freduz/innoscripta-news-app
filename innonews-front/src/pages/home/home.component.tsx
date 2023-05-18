@@ -79,7 +79,7 @@ const Home:React.FC<HomeProps> = (props) => {
 
     return (
         <>
-        <section className="container mx-auto mt-7 news-content-area  md:grid grid-cols-[minmax(5rem,_1fr)_2fr_minmax(5rem,_1fr)]">
+        <section className="container mx-auto mt-7 news-content-area  lg:grid grid-cols-[minmax(5rem,_1fr)_2fr_minmax(5rem,_1fr)]">
          <LatestNews latestNews={latestNews} loading={customFeedLoader|| commonFeedLoader }/>  
          <MainFeed trending={trending} loading={customFeedLoader || commonFeedLoader}/>
          <Headlines headlines={randomPicks} loading={customFeedLoader || commonFeedLoader}/>
