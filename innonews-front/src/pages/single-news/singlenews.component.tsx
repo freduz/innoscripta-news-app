@@ -31,7 +31,7 @@ const SingleNews = (props: Props) => {
                             {
                                 newsData?.map((data:any) => (
                                     <>
-                                    <Link to={data.webUrl} target='_blank'>
+                                    <Link key={data} to={data.webUrl} target='_blank'>
                                     <div className="news-card flex gap-2 p-4 h-fit">
                                             <div className="topic-content">
                                                 <span className="font-playfair text-sm font-bold">{data.webPublicationDate.split("T")[0]}</span>

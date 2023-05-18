@@ -32,7 +32,7 @@ const Headlines:React.FC<headlineProps> = ({headlines,loading}) => {
                         <div className="random-pick-news flex flex-col gap-5">
                         {
                           headlines.slice(0,28).map(headline => (
-                            <Headline headline={headline}/>
+                            <Headline key={headline} headline={headline}/>
                           ))
                         }
                        
