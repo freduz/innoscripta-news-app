@@ -12,7 +12,7 @@ const Categories:React.FC<categoriesProps> = (props) => {
            <li><NavLink to="news/entertainment">ENTERTAINMENT</NavLink></li>
            <li><NavLink to="news/technology">TECHNOLOGY</NavLink></li>
            <li><NavLink to="news/travel">TRAVEL</NavLink></li>
-           <li><NavLink to="news/business">Business</NavLink></li>
+           <li><NavLink to="news/business">BUSINESS</NavLink></li>
         </ul>
      </div>
      <hr></hr>

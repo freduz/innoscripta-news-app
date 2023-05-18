@@ -7,6 +7,7 @@ import Register from '../pages/register/register.component'
 import UserSettings from '../pages/settings/user-settings.component'
 import SearchResult from '../pages/searchResult/searchresult.component'
 import SingleNews from '../pages/single-news/singlenews.component'
+import ProtectRoute from './ProtectRoute'
 
 const Main = () => {
   return (
@@ -15,7 +16,7 @@ const Main = () => {
         <Route index element={<Home/>}/>
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
-        <Route path='/settings' element={<UserSettings/>} />
+        <Route path='/settings' element={ <ProtectRoute> <UserSettings/></ProtectRoute>} />
         <Route path='/search' element={<SearchResult/>}/>
         <Route path='/news/:slug' element={<SingleNews/>}/>
         <Route path='/news/:slug' element={<SingleNews/>}/>

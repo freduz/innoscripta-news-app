@@ -28,7 +28,7 @@ const Login:React.FC<loginProps> = (props) => {
 
   useEffect(() => {
     if(userInfo){
-      navigate('/')
+      navigate('/',{replace:true})
     }
 
   },[navigate,userInfo])
@@ -44,7 +44,7 @@ const Login:React.FC<loginProps> = (props) => {
     try{
       const res = await login({email,password}).unwrap()
       dispatch(setCredentials({...res}))
-      navigate('/')
+      navigate('/',{replace:true})
     }catch(e:any){
       toast.error(e?.data?.message || e?.error)
     }

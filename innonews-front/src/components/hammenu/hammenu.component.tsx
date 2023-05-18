@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { RootState } from '../../store/store'
 import { useLogoutMutation } from '../../store/slices/userAuthSlice'
 import { logout } from '../../store/slices/authSlice'
+import { NavLink } from 'react-router-dom'
 type categoriesProps = {}
 
 const HamMenu:React.FC<categoriesProps> = (props) => {
@@ -35,6 +36,13 @@ const HamMenu:React.FC<categoriesProps> = (props) => {
         }
     }
 
+    const loginBtnHandler = () => {
+        navRef.current.classList.toggle(
+			"responsive_nav"
+		);
+        navigate('/login')
+    }
+
     const navigateSettings = () => {
         navRef.current.classList.toggle(
 			"responsive_nav"
@@ -42,15 +50,26 @@ const HamMenu:React.FC<categoriesProps> = (props) => {
         navigate('/settings')
     }
 
+
+    const handleRoute = (event:any) => {
+        navRef.current.classList.toggle(
+			"responsive_nav"
+		);
+        event.preventDefault();
+        const {pathname} = event.target;
+        navigate(pathname);
+
+    }
+
   return (
    <>
    <div className='md:hidden'>
    <header id='head'>
 			<nav className='flex justify-center' ref={navRef}>
-				<a href="/#">Home</a>
-				<a href="/#">My work</a>
-				<a href="/#">Blog</a>
-				<a href="/#">About me</a>
+            <NavLink to="news/entertainment" onClick={handleRoute}>entertainment</NavLink>
+           <NavLink to="news/technology" onClick={handleRoute}>technology</NavLink>
+           <NavLink to="news/travel" onClick={handleRoute}>travel</NavLink>
+           <NavLink to="news/business" onClick={handleRoute}>business</NavLink>
                 <div>
                 {userInfo ? (
                 <>
@@ -62,7 +81,7 @@ const HamMenu:React.FC<categoriesProps> = (props) => {
             ) : (
                 <>
                 <div className="hidden md:grow md:basis-0 md:flex items-center justify-end">
-            <Link to="/login" className="text-white bg-black hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Login</Link>
+            <button onClick={loginBtnHandler}  className="text-white bg-black hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Login</button>
         </div>
                 </>
             )
