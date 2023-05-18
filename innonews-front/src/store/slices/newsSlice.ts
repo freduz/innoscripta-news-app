@@ -11,7 +11,8 @@ const initialState = {
     latestNews:[],
     randomPicks:[],
     trending:[]
-   }
+   },
+   searchNews:[]
 
 }
 
@@ -37,9 +38,12 @@ const newsSlice = createSlice({
         setCustomFeed:(state,action) => {
             state.customFeed = action.payload;
         },
+        setSearchNews:(state,action) => {
+            state.searchNews = action.payload;
+        },
 
     }
 })
 
-export const {setSports,setEducation,setPolitics,setEntertainment,setTechnology,setCustomFeed} = newsSlice.actions
+export const {setSports,setEducation,setPolitics,setEntertainment,setTechnology,setCustomFeed,setSearchNews} = newsSlice.actions
 export default newsSlice.reducer

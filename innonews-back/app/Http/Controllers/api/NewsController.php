@@ -6,15 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Js;
 use Location;
 
 class NewsController extends Controller
 {
     private $API_KEY_NEWS_ORG;
     private $API_KEY_NEWS_IO;
+    private $GURDIAN_NEWS_API;
     function __construct() {
         $this->API_KEY_NEWS_ORG = env("NEWS_API_KEY");
         $this->API_KEY_NEWS_IO = env("NEWS_API_IO_KEY");
+        $this->GURDIAN_NEWS_API =  env("GUARDIAN_API_KEY");
     }
 
     public function getEverything(Request $request){
@@ -39,7 +42,17 @@ class NewsController extends Controller
         $searchTerm = $request->query('q');
         $pageSize =  $request->query('pageSize');
         $news = Http::get("https://newsapi.org/v2/everything?q=$searchTerm&apiKey=$this->API_KEY_NEWS_ORG&pageSize=$pageSize")->json();
-        return response($news['articles'],201);
+        return response($news['articles'],200);
+    }
+
+    public function searchFilterNews(Request $request){
+        $searchTerm = $request->query('q');
+        $news = Http::get("http://eventregistry.org/api/v1/article/getArticles",[
+            'apiKey' => $this->API_KEY_NEWS_IO,
+            'keyword' => $searchTerm,
+        ]);
+
+        return $news->json();
     }
 
     private function makeHomeFeed($keyword,$preference=[]){
@@ -78,6 +91,20 @@ class NewsController extends Controller
         ];
 
         return response($finalFeed);
+    }
+
+
+    public function getGuardianSearch(Request $request){
+        $searchTerm = $searchTerm = $request->query('q');
+        $news = Http::get("https://content.guardianapis.com/search",[
+            'q' => $searchTerm,
+            'page-size' => 50,
+            'api-key' => $this->GURDIAN_NEWS_API
+        ]);
+
+
+        return $news->json();
+
     }
 
 

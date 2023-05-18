@@ -11,6 +11,16 @@ export const newsApiSlice = apiSlice.injectEndpoints({
                 params:{
                     q:searchTerm,
                     pageSize
+                },
+            }),
+        }),
+        search:builder.mutation({
+            query:({searchTerm,pageSize}) => ({
+                url:`${API_URL}/unique/search`,
+                method:'GET',
+                params:{
+                    q:searchTerm,
+                    pageSize
                 }
             })
         }),
@@ -26,7 +36,16 @@ export const newsApiSlice = apiSlice.injectEndpoints({
                 method:'GET'
             })
         }),
+        single:builder.mutation({
+            query:(searchTerm) => ({
+                url:`${API_URL}/guaridan/search`,
+                method:'GET',
+                params:{
+                    q:searchTerm
+                },
+            }),
+        }),
     })
 })
 
-export const {useFindMutation,useCustomFeedMutation,useNonLoginFeedMutation} = newsApiSlice
+export const {useFindMutation,useCustomFeedMutation,useNonLoginFeedMutation,useSearchMutation,useSingleMutation} = newsApiSlice

@@ -8,6 +8,7 @@ import CommonNews from "../../components/common-news/common-news.component"
 import { RootState } from "../../store/store"
 import { useCustomFeedMutation, useFindMutation, useNonLoginFeedMutation } from "../../store/slices/newsApiSlice"
 import { setCustomFeed, setEducation, setPolitics, setSports, setTechnology } from "../../store/slices/newsSlice"
+import mapErrorToToast from "../../utils/newsErrorHandler"
 
 
 type HomeProps = {
@@ -16,10 +17,11 @@ type HomeProps = {
 const Home:React.FC<HomeProps> = (props) => {
 
      const [customFeedCaller,{isLoading:customFeedLoader}] = useCustomFeedMutation();
-     const [findNewsApiCaller,{isLoading:commonNewsLoader}] = useFindMutation();
+     const [findNewsApiCaller,{isLoading:commonNewsLoader,error}] = useFindMutation();
      const [findNonLoginFeedCaller,{isLoading:commonFeedLoader}] = useNonLoginFeedMutation();
      const {userInfo} = useSelector((state:RootState) => state.auth)
 
+     console.error('error',error)
   
 
 
@@ -42,7 +44,9 @@ const Home:React.FC<HomeProps> = (props) => {
 
     useEffect(() => {
      const loadSportsFeed = async () => {
-          const sportsFeed = await findNewsApiCaller({searchTerm:'(football AND cricket)',pageSize:20}).unwrap();
+          const sportsFeed = await findNewsApiCaller({searchTerm:'(football AND cricket)',pageSize:20}).unwrap()
+          .then((payload:any) => console.log('fulfilled', payload))
+          .catch((error) =>mapErrorToToast(error))
           dispatcher(setSports(sportsFeed))
      }
      loadSportsFeed();
@@ -51,22 +55,32 @@ const Home:React.FC<HomeProps> = (props) => {
 
     useEffect(() => {
      const loadEducationFeed = async () => {
-          const educationFeed = await findNewsApiCaller({searchTerm:'(education)',pageSize:20}).unwrap();
+         try{
+          const educationFeed = await findNewsApiCaller({searchTerm:'(education)',pageSize:20}).unwrap()
+          .then((payload) => console.log('fulfilled', payload))
+          .catch((error) => mapErrorToToast(error))
           dispatcher(setEducation(educationFeed))
+         }catch(err){
+          console.error(err)
+         }
      }
      loadEducationFeed();
     },[])
 
     useEffect(() => {
      const loadTechnologyFeed = async () => {
-          const techFeed = await findNewsApiCaller({searchTerm:'(technology)',pageSize:20}).unwrap();
+          const techFeed = await findNewsApiCaller({searchTerm:'(technology)',pageSize:20}).unwrap()
+          .then((payload) => console.log('fulfilled', payload))
+          .catch((error) => mapErrorToToast(error))
           dispatcher(setTechnology(techFeed))
      }
      loadTechnologyFeed();
     },[])
     useEffect(() => {
      const loadPoliticsFeed = async () => {
-          const politicsFeed = await findNewsApiCaller({searchTerm:'(politics)',pageSize:20}).unwrap();
+          const politicsFeed = await findNewsApiCaller({searchTerm:'(politics)',pageSize:20}).unwrap()
+          .then((payload) => console.log('fulfilled', payload))
+          .catch((error) => mapErrorToToast(error))
           dispatcher(setPolitics(politicsFeed))
      }
      loadPoliticsFeed();
