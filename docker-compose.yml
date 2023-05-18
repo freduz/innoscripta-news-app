@@ -14,16 +14,11 @@ services:
       DB_PASSWORD: 123
     
     ports:
-      - 8000:8000
-    
+      - 8000:8000 
     volumes:
-      - ./innonews-back:/app/backend
-    
+      - ./innonews-back:/var/www/html 
     depends_on:
       - db
-      
-
-
     networks:
       - app
 
@@ -31,17 +26,13 @@ services:
     build:
       context: ./innonews-front
       dockerfile: Dockerfile
-    
     tty: true
-    
     ports:
       - 3000:3000
     volumes:
-      - ./innonews-front:/app/frontend
-    
+      - ./innonews-front:/usr/src/app
     depends_on:
       - backend
-
     networks:
       - app
 
