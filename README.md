@@ -35,7 +35,8 @@ To migrate the database
 ## Appendix
 
 External apis used for the project
+News api io :  https://newsapi.org/
+guardian api : https://open-platform.theguardian.com/documentation/
+News api ai:   https://newsapi.ai/documentation?tab=introduction
 
-https://newsapi.org/
-https://open-platform.theguardian.com/documentation/
-https://newsapi.ai/documentation?tab=introduction
+
