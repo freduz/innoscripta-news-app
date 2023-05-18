@@ -27,7 +27,7 @@ const MainFeed:React.FC<mainFeedProps> = ({trending,loading}) => {
                     
             { !loading && (
 trending.slice(0,28).map(news => (
-  <MainFeedCard news={news}/>
+  <MainFeedCard key={news} news={news}/>
 ))
             )
               

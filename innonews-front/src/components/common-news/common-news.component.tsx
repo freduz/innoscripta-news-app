@@ -33,7 +33,7 @@ const CommonNews:React.FC<Props> = ({news,label,loading}) => {
                             {
                                 news?.map(data => (
                                     <>
-                                    <Link to={data.url} target='_blank'>
+                                    <Link to={data.url} target='_blank' key={data}>
                                     <div className="news-card flex gap-2 p-4 h-fit">
                                             <img src={data.urlToImage} alt="" className="w-[50%] object-cover object-bottom"/>
                                             <div className="topic-content">

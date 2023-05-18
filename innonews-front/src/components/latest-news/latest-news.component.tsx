@@ -31,7 +31,7 @@ const LatestNews:React.FC<latestNewsProps> = ({latestNews,loading}) => {
               !loading && (
                 latestNews.slice(0,9).map(news => (
                   <>
-                  <div className="news-content flex flex-col gap-3">
+                  <div className="news-content flex flex-col gap-3" key={news}>
                   <img src={news.image} alt="" className="w-full h-25 object-cover object-bottom"/>
                    <div className="flex flex-col gap-3">
                       <span className="text-[15px] font-[700] font-sans">{news.date}</span>

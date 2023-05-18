@@ -17,15 +17,10 @@ type HomeProps = {
 const Home:React.FC<HomeProps> = (props) => {
 
      const [customFeedCaller,{isLoading:customFeedLoader}] = useCustomFeedMutation();
-     const [findNewsApiCaller,{isLoading:commonNewsLoader,error}] = useFindMutation();
+     const [findNewsApiCaller,{isLoading:commonNewsLoader}] = useFindMutation();
      const [findNonLoginFeedCaller,{isLoading:commonFeedLoader}] = useNonLoginFeedMutation();
      const {userInfo} = useSelector((state:RootState) => state.auth)
-
-     console.error('error',error)
-  
-
-
-  const dispatcher = useDispatch();
+     const dispatcher = useDispatch();
 
 
     useEffect(() => {
