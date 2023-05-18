@@ -12,5 +12,5 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install
 
 
-CMD bin/sh -c "composer install && php artisan serve --host 0.0.0.0 --port 8000"
+CMD php artisan serve --host 0.0.0.0 --port 8000
 
