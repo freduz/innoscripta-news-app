@@ -27,9 +27,13 @@ const Home:React.FC<HomeProps> = (props) => {
           const loadCustomFeedData = async () => {
                let customfFeedData = []
               if(userInfo){
-               customfFeedData = await customFeedCaller('').unwrap();
+               customfFeedData = await customFeedCaller('').unwrap()
+               .then()
+               .catch((error) =>mapErrorToToast(error))
               }else{
-               customfFeedData = await findNonLoginFeedCaller('').unwrap();
+               customfFeedData = await findNonLoginFeedCaller('').unwrap()
+               .then()
+               .catch((error) =>mapErrorToToast(error))
               }
 
               dispatcher(setCustomFeed(customfFeedData))
