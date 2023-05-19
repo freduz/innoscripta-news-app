@@ -16,6 +16,9 @@ type HomeProps = {
 
 const Home:React.FC<HomeProps> = (props) => {
 
+     const {latestNews,randomPicks,trending} = useSelector((state:RootState) => state.news.customFeed)
+     const {sports,education,technology,politics} = useSelector((state:RootState) => state.news)
+
      const [customFeedCaller,{isLoading:customFeedLoader}] = useCustomFeedMutation();
      const [findNewsApiCaller,{isLoading:commonNewsLoader}] = useFindMutation();
      const [findNonLoginFeedCaller,{isLoading:commonFeedLoader}] = useNonLoginFeedMutation();
@@ -23,30 +26,15 @@ const Home:React.FC<HomeProps> = (props) => {
      const dispatcher = useDispatch();
 
 
-    useEffect(() => {
-          const loadCustomFeedData = async () => {
-               let customfFeedData = []
-              if(userInfo){
-               customfFeedData = await customFeedCaller('').unwrap()
-               .then()
-               .catch((error) =>mapErrorToToast(error))
-              }else{
-               customfFeedData = await findNonLoginFeedCaller('').unwrap()
-               .then()
-               .catch((error) =>mapErrorToToast(error))
-              }
-
-              dispatcher(setCustomFeed(customfFeedData))
-          }
-          loadCustomFeedData();
-    },[customFeedCaller, findNonLoginFeedCaller,dispatcher])
+   
 
     useEffect(() => {
      const loadSportsFeed = async () => {
-          const sportsFeed = await findNewsApiCaller({searchTerm:'(football AND cricket)',pageSize:20}).unwrap()
-          .then((payload:any) => console.log('fulfilled', payload))
-          .catch((error) =>mapErrorToToast(error))
-          dispatcher(setSports(sportsFeed))
+           await findNewsApiCaller({searchTerm:'(football AND cricket)',pageSize:20}).unwrap()
+          .then((sportsFeed:any) => {
+               dispatcher(setSports(sportsFeed))
+          })
+          .catch((error:any) =>mapErrorToToast(error))
      }
      loadSportsFeed();
      
@@ -56,9 +44,10 @@ const Home:React.FC<HomeProps> = (props) => {
      const loadEducationFeed = async () => {
          try{
           const educationFeed = await findNewsApiCaller({searchTerm:'(education)',pageSize:20}).unwrap()
-          .then((payload) => console.log('fulfilled', payload))
-          .catch((error) => mapErrorToToast(error))
-          dispatcher(setEducation(educationFeed))
+          .then((educationFeed:any) =>{
+               dispatcher(setEducation(educationFeed))
+          })
+          .catch((error:any) => mapErrorToToast(error))
          }catch(err){
           console.error(err)
          }
@@ -69,26 +58,45 @@ const Home:React.FC<HomeProps> = (props) => {
     useEffect(() => {
      const loadTechnologyFeed = async () => {
           const techFeed = await findNewsApiCaller({searchTerm:'(technology)',pageSize:20}).unwrap()
-          .then((payload) => console.log('fulfilled', payload))
-          .catch((error) => mapErrorToToast(error))
-          dispatcher(setTechnology(techFeed))
+          .then((techFeed:any) => {
+               dispatcher(setTechnology(techFeed))
+          })
+          .catch((error:any) => mapErrorToToast(error))
      }
      loadTechnologyFeed();
     },[])
     useEffect(() => {
      const loadPoliticsFeed = async () => {
           const politicsFeed = await findNewsApiCaller({searchTerm:'(politics)',pageSize:20}).unwrap()
-          .then((payload) => console.log('fulfilled', payload))
-          .catch((error) => mapErrorToToast(error))
-          dispatcher(setPolitics(politicsFeed))
+          .then((politicsFeed:any) => {
+          dispatcher(setPolitics(politicsFeed)) 
+          })
+          .catch((error:any) => mapErrorToToast(error))
+
      }
      loadPoliticsFeed();
     },[])
 
 
+    useEffect(() => {
+     const loadCustomFeedData = async () => {
+         if(userInfo){
+          await customFeedCaller('').unwrap()
+          .then(feed => {
+               dispatcher(setCustomFeed(feed))
+          })
+          .catch((error:any) =>mapErrorToToast(error))
+         }else{
+          await findNonLoginFeedCaller('').unwrap()
+          .then(feed => {
+               dispatcher(setCustomFeed(feed))})
+          .catch((error:any) =>mapErrorToToast(error))}
 
-     const {latestNews,randomPicks,trending} = useSelector((state:RootState) => state.news.customFeed)
-     const {sports,education,technology,politics} = useSelector((state:RootState) => state.news)
+      
+     }
+     loadCustomFeedData();
+},[customFeedCaller, findNonLoginFeedCaller,dispatcher])
+
 
     return (
         <>
