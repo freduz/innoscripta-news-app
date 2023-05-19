@@ -81,7 +81,7 @@ const [date, setDate] = useState('');
            <button onClick={filterResults}  type="button" className="mt-5 text-white bg-black hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-4 py-2 focus:outline-none">Filter results</button>
       </div>
       {
-        searchNews.length !==0 ? (
+        searchNews?.length !==0 ? (
           <>
              <SearchResultCard label='' loading={false}  news={searchNews}/>
           </>
