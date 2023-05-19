@@ -52,7 +52,7 @@ class NewsController extends Controller
             'keyword' => $searchTerm,
         ]);
 
-        return $news->json();
+        return $news->json() ?? [];
     }
 
     private function makeHomeFeed($keyword,$preference=[]){
