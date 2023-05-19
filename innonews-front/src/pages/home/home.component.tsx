@@ -8,7 +8,7 @@ import CommonNews from "../../components/common-news/common-news.component"
 import { RootState } from "../../store/store"
 import { useCustomFeedMutation, useFindMutation, useNonLoginFeedMutation } from "../../store/slices/newsApiSlice"
 import { setCustomFeed, setEducation, setPolitics, setSports, setTechnology } from "../../store/slices/newsSlice"
-import mapErrorToToast from "../../utils/newsErrorHandler"
+import MapErrorToToast from "../../utils/newsErrorHandler"
 
 
 type HomeProps = {
@@ -34,7 +34,7 @@ const Home:React.FC<HomeProps> = (props) => {
           .then((sportsFeed:any) => {
                dispatcher(setSports(sportsFeed))
           })
-          .catch((error:any) =>mapErrorToToast(error))
+          .catch((error:any) =>MapErrorToToast(error))
      }
      loadSportsFeed();
      
@@ -43,11 +43,11 @@ const Home:React.FC<HomeProps> = (props) => {
     useEffect(() => {
      const loadEducationFeed = async () => {
          try{
-          const educationFeed = await findNewsApiCaller({searchTerm:'(education)',pageSize:20}).unwrap()
+          await findNewsApiCaller({searchTerm:'(education)',pageSize:20}).unwrap()
           .then((educationFeed:any) =>{
                dispatcher(setEducation(educationFeed))
           })
-          .catch((error:any) => mapErrorToToast(error))
+          .catch((error:any) => MapErrorToToast(error))
          }catch(err){
           console.error(err)
          }
@@ -57,21 +57,21 @@ const Home:React.FC<HomeProps> = (props) => {
 
     useEffect(() => {
      const loadTechnologyFeed = async () => {
-          const techFeed = await findNewsApiCaller({searchTerm:'(technology)',pageSize:20}).unwrap()
+          await findNewsApiCaller({searchTerm:'(technology)',pageSize:20}).unwrap()
           .then((techFeed:any) => {
                dispatcher(setTechnology(techFeed))
           })
-          .catch((error:any) => mapErrorToToast(error))
+          .catch((error:any) => MapErrorToToast(error))
      }
      loadTechnologyFeed();
     },[])
     useEffect(() => {
      const loadPoliticsFeed = async () => {
-          const politicsFeed = await findNewsApiCaller({searchTerm:'(politics)',pageSize:20}).unwrap()
+           await findNewsApiCaller({searchTerm:'(politics)',pageSize:20}).unwrap()
           .then((politicsFeed:any) => {
           dispatcher(setPolitics(politicsFeed)) 
           })
-          .catch((error:any) => mapErrorToToast(error))
+          .catch((error:any) => MapErrorToToast(error))
 
      }
      loadPoliticsFeed();
@@ -85,12 +85,12 @@ const Home:React.FC<HomeProps> = (props) => {
           .then(feed => {
                dispatcher(setCustomFeed(feed))
           })
-          .catch((error:any) =>mapErrorToToast(error))
+          .catch((error:any) =>MapErrorToToast(error))
          }else{
           await findNonLoginFeedCaller('').unwrap()
           .then(feed => {
                dispatcher(setCustomFeed(feed))})
-          .catch((error:any) =>mapErrorToToast(error))}
+          .catch((error:any) =>MapErrorToToast(error))}
 
       
      }

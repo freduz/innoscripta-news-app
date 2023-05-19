@@ -48,6 +48,8 @@ const [date, setDate] = useState('');
 
   const {searchNews} = useSelector((state:RootState) => state.news)
 
+
+
   const filterResults = () => {
     const formattedSources = selectedSources?.map(source => {
       return source['cat']
